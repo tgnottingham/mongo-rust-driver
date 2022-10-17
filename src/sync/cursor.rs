@@ -165,6 +165,14 @@ impl<T> Cursor<T> {
     {
         self.async_cursor.deserialize_current()
     }
+
+    /// Update the type streamed values will be parsed as.
+    pub fn with_type<'a, D>(self) -> Cursor<D>
+    where
+        D: Deserialize<'a>,
+    {
+        Cursor::new(self.async_cursor.with_type::<'a, D>())
+    }
 }
 
 impl<T> Iterator for Cursor<T>
@@ -295,6 +303,14 @@ impl<T> SessionCursor<T> {
         T: Deserialize<'a>,
     {
         self.async_cursor.deserialize_current()
+    }
+
+    /// Update the type streamed values will be parsed as.
+    pub fn with_type<'a, D>(self) -> SessionCursor<D>
+    where
+        D: Deserialize<'a>,
+    {
+        SessionCursor::new(self.async_cursor.with_type::<'a, D>())
     }
 }
 
